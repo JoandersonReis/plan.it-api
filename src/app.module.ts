@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { UserModule } from './controller/user/UserModule';
-import { UserRepositoryPrismaModule } from './database/prisma/user/UserRepositoryPrismaModule';
+import { PrismaModule } from './database/prisma/PrismaModule';
+import { EnsureUserAuthenticated } from './middleware/EnsureUserAuthenticated';
+import { EnsureUserRefreshAuthenticated } from './middleware/EnsureUserRefeshAuthenticated';
 
 @Module({
   imports: [
@@ -8,9 +10,22 @@ import { UserRepositoryPrismaModule } from './database/prisma/user/UserRepositor
     UserModule,
 
     // Prisma modules
-    UserRepositoryPrismaModule,
+    PrismaModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(EnsureUserAuthenticated)
+      .exclude(
+        { path: '/user/login', method: RequestMethod.POST },
+        { path: '/user', method: RequestMethod.POST },
+        { path: '/user/auth/refresh', method: RequestMethod.POST },
+      );
+    consumer
+      .apply(EnsureUserRefreshAuthenticated)
+      .forRoutes('/user/auth/refresh');
+  }
+}

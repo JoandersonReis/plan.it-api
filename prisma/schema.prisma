@@ -20,15 +20,28 @@ enum Priority {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String    @id @default(uuid())
+  email     String    @unique
   password  String
   fullname  String
-  balance   String   @default("0")
-  createdAt DateTime @default(now())
+  balance   String    @default("0")
+  createdAt DateTime  @default(now())
   Event     Event[]
   Task      Task[]
-  Debts     Debt[]
+  Debt      Debt[]
+  Session   Session[]
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  accessToken  String   @unique
+  refreshToken String   @unique
+  active       Boolean  @default(true)
+  ip           String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Event {
@@ -40,7 +53,7 @@ model Event {
   priority    Priority @default(MEDIUM)
   repeat      Boolean  @default(false)
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
@@ -52,7 +65,7 @@ model Task {
   does      Boolean   @default(false)
   doesAt    DateTime?
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
@@ -65,6 +78,6 @@ model Debt {
   value     String
   repeat    Boolean  @default(false)
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }

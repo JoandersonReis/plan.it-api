@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'prisma/prisma.service';
 import UserRepositoryContract from 'src/contract/user/UserRepositoryContract';
-import { CONFIG } from 'src/utils/Config';
+import { SessionRepositoryPrisma } from 'src/database/prisma/session/SessionRepositoryPrisma';
 import { Encode } from 'src/utils/Encode';
 import { Exception } from 'src/utils/Exception';
 import { JWT } from 'src/utils/JWT';
-import { TTokenPayload } from 'src/utils/types';
+import { UserAuthenticate } from 'src/utils/UserAuthenticate';
 import { TLoginCreateData } from './types';
 
 @Injectable()
 export default class LoginUserService {
   constructor(private repository: UserRepositoryContract) {}
 
-  public async execute({ email, password }: TLoginCreateData) {
+  public async execute({ email, password, ip }: TLoginCreateData) {
     const user = await this.repository.getByEmail(email.getValue());
 
     if (!user) {
@@ -24,34 +25,38 @@ export default class LoginUserService {
       throw Exception.execute('Usuário ou senha inválidos', 401);
     }
 
-    const { secrets, accessTokenPayload, refreshTokenPayload } =
-      this.tokensConfiguration(user.id);
+    const userAuthenticate = new UserAuthenticate(new JWT());
 
-    const { accessToken, refreshToken } = JWT.generate(
-      secrets,
-      accessTokenPayload,
-      refreshTokenPayload,
+    const sessionRepo = new SessionRepositoryPrisma(new PrismaService());
+
+    const [sessionExists] = await sessionRepo.getByUserId(user.id, ip);
+    const sessionId = crypto.randomUUID();
+
+    const { accessToken, refreshToken } = userAuthenticate.generateTokens(
+      user.id,
+      sessionExists ? sessionExists.id : sessionId,
     );
 
+    if (!sessionExists) {
+      const session = await sessionRepo.create({
+        id: sessionId,
+        accessToken,
+        refreshToken,
+        userId: user.id,
+        ip,
+      });
+
+      if (!session) {
+        throw Exception.execute('Erro ao criar sessão', 500);
+      }
+    } else {
+      await sessionRepo.update(sessionExists.id, {
+        active: true,
+        accessToken,
+        refreshToken,
+      });
+    }
+
     return { user: { fullname: user.fullname }, accessToken, refreshToken };
-  }
-
-  private tokensConfiguration(userId: string) {
-    const secrets = {
-      accessToken: CONFIG.USER.SECRETS.ACCESS,
-      refreshToken: CONFIG.USER.SECRETS.REFRESH,
-    };
-
-    const accessTokenPayload: TTokenPayload = {
-      subject: userId,
-      expiresIn: CONFIG.USER.EXPIRES.ACCESS,
-    };
-
-    const refreshTokenPayload: TTokenPayload = {
-      subject: userId,
-      expiresIn: CONFIG.USER.EXPIRES.REFRESH,
-    };
-
-    return { secrets, accessTokenPayload, refreshTokenPayload };
   }
 }

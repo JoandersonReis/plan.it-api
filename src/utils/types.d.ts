@@ -13,3 +13,7 @@ export type TTokenSecrets = {
   accessToken: string;
   refreshToken?: string;
 };
+
+export type TJWTValidadeResponse = {
+  sub: string;
+};

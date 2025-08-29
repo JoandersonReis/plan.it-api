@@ -9,4 +9,7 @@ export const CONFIG = {
       REFRESH: '2h',
     },
   },
+  SESSION: {
+    EXPIRES_TIMESTAMP: 7 * 24 * 60 * 60 * 1000, // 7 days
+  },
 };

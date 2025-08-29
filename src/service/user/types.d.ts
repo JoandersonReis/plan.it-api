@@ -4,4 +4,5 @@ import { Password } from 'src/entity/Password';
 export type TLoginCreateData = {
   email: Email;
   password: Password;
+  ip: string;
 };
