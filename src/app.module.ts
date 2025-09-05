@@ -23,7 +23,8 @@ export class AppModule {
         { path: '/user/login', method: RequestMethod.POST },
         { path: '/user', method: RequestMethod.POST },
         { path: '/user/auth/refresh', method: RequestMethod.POST },
-      );
+      )
+      .forRoutes('*');
     consumer
       .apply(EnsureUserRefreshAuthenticated)
       .forRoutes('/user/auth/refresh');

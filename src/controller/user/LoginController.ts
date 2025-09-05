@@ -54,9 +54,9 @@ export class LoginController {
   public async logout(@Req() request: Request, @Res() response: Response) {
     try {
       const sessionRepo = new SessionRepositoryPrisma(new PrismaService());
-      sessionRepo.active(request.sessionId, false);
+      await sessionRepo.active(request.sessionId, false);
 
-      return response.status(201);
+      return response.status(201).json();
     } catch (error: TException | any) {
       return response.status(error.statusCode || 500).json({
         message: error.message || 'Internal server error',
