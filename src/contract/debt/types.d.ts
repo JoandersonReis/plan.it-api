@@ -1,3 +1,5 @@
+import { TUserDatabase } from '../user/types';
+
 export type TDebtCreateData = {
   title: string;
   commit: Date;
@@ -15,4 +17,7 @@ export type TDebtFind = {
 export type TDebtDatabase = TDebtCreateData & {
   id: string;
   createdAt: Date;
+  user: TUserDatabase;
+  repeat: boolean;
+  paid: boolean;
 };

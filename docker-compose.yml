@@ -1,6 +1,17 @@
 services:
+  redis:
+    image: redis:7-alpine # imagem oficial do Redis
+    container_name: plan-redis
+    ports:
+      - '6379:6379' # mapeia porta 6379 para o host
+    volumes:
+      - redis-data:/data # persiste dados
+    restart: unless-stopped
   db:
     image: postgres:alpine
+    environment:
+      - TZ=America/Sao_Paulo
+      - PGTZ=America/Sao_Paulo
     env_file:
       - ./.env
     ports:
@@ -10,3 +21,4 @@ services:
 
 volumes:
   postgres_data:
+  redis-data:

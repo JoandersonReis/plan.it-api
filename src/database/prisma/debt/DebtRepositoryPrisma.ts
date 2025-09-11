@@ -24,6 +24,9 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
       where: {
         userId,
       },
+      include: {
+        user: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },
@@ -49,6 +52,9 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
         id,
         userId,
       },
+      include: {
+        user: true,
+      },
     });
 
     return debt;
@@ -57,6 +63,9 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
   public async create(data: TDebtCreateData): Promise<TDebtDatabase> {
     const debtCreated = await this.prisma.debt.create({
       data,
+      include: {
+        user: true,
+      },
     });
 
     return debtCreated;
@@ -71,6 +80,9 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
         id,
         userId: data.userId,
       },
+      include: {
+        user: true,
+      },
       data,
     });
 
@@ -82,6 +94,9 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
       where: {
         id,
         userId,
+      },
+      include: {
+        user: true,
       },
     });
 

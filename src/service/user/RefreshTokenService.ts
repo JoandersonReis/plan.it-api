@@ -16,8 +16,6 @@ export class RefreshTokenService {
       sessionId,
     );
 
-    console.log(refreshToken, accessToken);
-
     const updatedSession = await this.repository.update(sessionId, {
       accessToken,
       refreshToken,

@@ -18,8 +18,6 @@ export class ZodValidationPipe implements PipeTransform {
         };
       });
 
-      console.log(errors);
-
       throw Exception.execute('Campos inválidos!', 422, errors);
     }
   }

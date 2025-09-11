@@ -12,4 +12,15 @@ export const CONFIG = {
   SESSION: {
     EXPIRES_TIMESTAMP: 7 * 24 * 60 * 60 * 1000, // 7 days
   },
+  NODEMAILER: {
+    TRANSPORTER_OPTIONS: {
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD,
+      },
+    },
+  },
 };

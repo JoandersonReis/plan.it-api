@@ -22,7 +22,6 @@ export class SessionRepositoryPrisma implements SessionRepositoryContract {
     id: string,
     ip: string,
   ): Promise<TSessionDatabase | null> {
-    console.log(id, ip);
     const session = await this.prisma.session.findUnique({
       where: { id, ip },
     });
