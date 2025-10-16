@@ -3,8 +3,8 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { Queue } from 'bull';
 import { CronJob } from 'cron';
-import { TMailerInfo } from 'src/contract/types';
-import UserRepositoryContract from 'src/contract/user/UserRepositoryContract';
+import { TMailerInfo } from 'src/core/contract/types';
+import UserRepositoryContract from 'src/core/contract/user/UserRepositoryContract';
 import { CONFIG } from 'src/utils/Config';
 import { TDebtTemplate } from './types';
 

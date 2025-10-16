@@ -5,8 +5,8 @@ import {
   TUserCreateData,
   TUserDatabase,
   TUserWithDebt,
-} from 'src/contract/user/types';
-import UserRepositoryContract from 'src/contract/user/UserRepositoryContract';
+} from 'src/core/contract/user/types';
+import UserRepositoryContract from 'src/core/contract/user/UserRepositoryContract';
 
 @Injectable()
 export default class UserRepositoryPrisma implements UserRepositoryContract {

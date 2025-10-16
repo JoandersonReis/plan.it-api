@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { DebtRepositoryContract } from 'src/contract/debt/DebtRepositoryContract';
+import { DebtRepositoryContract } from 'src/core/contract/debt/DebtRepositoryContract';
 import {
   TDebtCreateData,
   TDebtDatabase,
   TDebtFind,
-} from 'src/contract/debt/types';
-import { TPaginationData } from 'src/contract/types';
+} from 'src/core/contract/debt/types';
+import { TPaginationData } from 'src/core/contract/types';
 
 @Injectable()
 export class DebtRepositoryPrisma implements DebtRepositoryContract {
@@ -58,6 +58,33 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
     });
 
     return debt;
+  }
+
+  public async findByMonth(
+    month: number,
+    userId: string,
+  ): Promise<TDebtDatabase[]> {
+    const startOfMonth = new Date();
+    startOfMonth.setMonth(month);
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const endOfMonth = new Date();
+    endOfMonth.setMonth(month);
+    endOfMonth.setDate(31);
+    endOfMonth.setHours(23, 59, 59, 999);
+
+    const debts = await this.prisma.debt.findMany({
+      where: {
+        commit: {
+          gte: startOfMonth,
+          lte: endOfMonth,
+        },
+        userId,
+      },
+    });
+
+    return debts;
   }
 
   public async create(data: TDebtCreateData): Promise<TDebtDatabase> {

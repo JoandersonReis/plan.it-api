@@ -1,6 +1,6 @@
 import { Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { RefreshTokenService } from 'src/service/user/RefreshTokenService';
+import { RefreshTokenService } from 'src/core/service/user/RefreshTokenService';
 import { TException } from 'src/utils/types';
 
 @Controller('/user/')

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { SessionRepositoryContract } from 'src/contract/session/SessionRepositoryContract';
+import { SessionRepositoryContract } from 'src/core/contract/session/SessionRepositoryContract';
 import {
   TSessionCreateData,
   TSessionDatabase,
-} from 'src/contract/session/types';
+} from 'src/core/contract/session/types';
 
 @Injectable()
 export class SessionRepositoryPrisma implements SessionRepositoryContract {

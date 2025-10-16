@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SessionRepositoryContract } from 'src/contract/session/SessionRepositoryContract';
+import { SessionRepositoryContract } from 'src/core/contract/session/SessionRepositoryContract';
 import { Exception } from 'src/utils/Exception';
 import { JWT } from 'src/utils/JWT';
 import { UserAuthenticate } from 'src/utils/UserAuthenticate';

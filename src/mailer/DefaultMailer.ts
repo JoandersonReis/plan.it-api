@@ -2,9 +2,9 @@ import { Process, Processor } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Job } from 'bull';
 import * as nodemailer from 'nodemailer';
-import { MailerContract } from 'src/contract/MailerContract';
-import { MailerHelperContract } from 'src/contract/MailerHelperContract';
-import { TMailerProcessorData } from 'src/contract/types';
+import { MailerContract } from 'src/core/contract/MailerContract';
+import { MailerHelperContract } from 'src/core/contract/MailerHelperContract';
+import { TMailerProcessorData } from 'src/core/contract/types';
 
 @Injectable()
 @Processor('mail')

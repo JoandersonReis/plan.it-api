@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import UserRepositoryContract from 'src/contract/user/UserRepositoryContract';
+import UserRepositoryContract from 'src/core/contract/user/UserRepositoryContract';
 import { SessionRepositoryPrisma } from 'src/database/prisma/session/SessionRepositoryPrisma';
 import { Encode } from 'src/utils/Encode';
 import { Exception } from 'src/utils/Exception';

@@ -1,4 +1,4 @@
-import { TDebtWithoutUser } from 'src/contract/user/types';
+import { TDebtWithoutUser } from 'src/core/contract/user/types';
 
 export type TDebtTemplate = {
   username: string;

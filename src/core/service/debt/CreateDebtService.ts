@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DebtRepositoryContract } from 'src/contract/debt/DebtRepositoryContract';
-import { Debt } from 'src/entity/Debt';
+import { DebtRepositoryContract } from 'src/core/contract/debt/DebtRepositoryContract';
+import { Debt } from 'src/core/entity/Debt';
 import { Exception } from 'src/utils/Exception';
 
 @Injectable()

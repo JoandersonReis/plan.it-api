@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import Handlebars from 'handlebars';
-import { MailerHelperContract } from 'src/contract/MailerHelperContract';
-import { TMailerInfo } from 'src/contract/types';
+import { MailerHelperContract } from 'src/core/contract/MailerHelperContract';
+import { TMailerInfo } from 'src/core/contract/types';
 import { TDebtTemplate } from 'src/job/types';
 import { CONFIG } from 'src/utils/Config';
 import { Utils } from 'src/utils/Utils';

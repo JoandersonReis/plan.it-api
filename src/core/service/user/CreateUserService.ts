@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import UserRepositoryContract from 'src/contract/user/UserRepositoryContract';
-import { User } from 'src/entity/User';
+import UserRepositoryContract from 'src/core/contract/user/UserRepositoryContract';
+import { User } from 'src/core/entity/User';
 import { Encode } from 'src/utils/Encode';
 import { Exception } from 'src/utils/Exception';
 

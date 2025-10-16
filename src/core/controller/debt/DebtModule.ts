@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { MailerContract } from 'src/contract/MailerContract';
-import { MailerHelperContract } from 'src/contract/MailerHelperContract';
+import { MailerContract } from 'src/core/contract/MailerContract';
+import { MailerHelperContract } from 'src/core/contract/MailerHelperContract';
+import { CreateDebtService } from 'src/core/service/debt/CreateDebtService';
 import { PrismaModule } from 'src/database/prisma/PrismaModule';
 import { DefaultMailer } from 'src/mailer/DefaultMailer';
 import { MailerHelper } from 'src/mailer/helper/MailerHelper';
-import { CreateDebtService } from 'src/service/debt/CreateDebtService';
 import { CreateDebtController } from './CreateDebtController';
 
 @Module({

@@ -9,15 +9,15 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PrismaService } from 'prisma/prisma.service';
-import { SessionRepositoryPrisma } from 'src/database/prisma/session/SessionRepositoryPrisma';
-import { Email } from 'src/entity/Email';
-import { Password } from 'src/entity/Password';
-import { ZodValidationPipe } from 'src/pipe/ZodValidationPipe';
+import { Email } from 'src/core/entity/Email';
+import { Password } from 'src/core/entity/Password';
 import {
   LoginUserSchema,
   TLoginUserSchema,
-} from 'src/schema/user/LoginUserSchema';
-import LoginUserService from 'src/service/user/LoginUserService';
+} from 'src/core/schema/user/LoginUserSchema';
+import LoginUserService from 'src/core/service/user/LoginUserService';
+import { SessionRepositoryPrisma } from 'src/database/prisma/session/SessionRepositoryPrisma';
+import { ZodValidationPipe } from 'src/pipe/ZodValidationPipe';
 import { TException } from 'src/utils/types';
 
 @Controller('/user')

@@ -1,7 +1,8 @@
 import { BullModule } from '@nestjs/bull';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { DebtModule } from './controller/debt/DebtModule';
-import { UserModule } from './controller/user/UserModule';
+import { DebtModule } from './core/controller/debt/DebtModule';
+import { StatisticsModule } from './core/controller/statistics/StatisticsModule';
+import { UserModule } from './core/controller/user/UserModule';
 import { PrismaModule } from './database/prisma/PrismaModule';
 import { DebtReportJob } from './job/DebtReportJob';
 import { EnsureUserAuthenticated } from './middleware/EnsureUserAuthenticated';
@@ -21,6 +22,7 @@ import { EnsureUserRefreshAuthenticated } from './middleware/EnsureUserRefeshAut
     // Entities modules
     UserModule,
     DebtModule,
+    StatisticsModule,
 
     // Prisma modules
     PrismaModule,

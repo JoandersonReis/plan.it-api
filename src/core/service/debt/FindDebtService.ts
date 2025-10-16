@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DebtRepositoryContract } from 'src/contract/debt/DebtRepositoryContract';
-import { TPaginationData } from 'src/contract/types';
+import { DebtRepositoryContract } from 'src/core/contract/debt/DebtRepositoryContract';
+import { TPaginationData } from 'src/core/contract/types';
 
 @Injectable()
 export class FindDebtService {

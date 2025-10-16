@@ -11,6 +11,11 @@ export abstract class DebtRepositoryContract {
 
   public abstract create(data: TDebtCreateData): Promise<TDebtDatabase>;
 
+  public abstract findByMonth(
+    month: number,
+    userId: string,
+  ): Promise<TDebtDatabase[]>;
+
   public abstract update(
     id: string,
     data: Partial<TDebtCreateData>,

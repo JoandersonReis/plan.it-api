@@ -17,7 +17,7 @@ export type TDebtFind = {
 export type TDebtDatabase = TDebtCreateData & {
   id: string;
   createdAt: Date;
-  user: TUserDatabase;
+  user?: TUserDatabase;
   repeat: boolean;
   paid: boolean;
 };
