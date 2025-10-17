@@ -9,6 +9,7 @@ export default class FindStatisticsService {
     const debts = await this.debtRepository.findByMonth(month, userId);
 
     var debtsDays = [];
+    var monthDebtsValueTotal = 0;
 
     if (debts.length > 0) {
       debts.forEach((item) => {
@@ -20,6 +21,8 @@ export default class FindStatisticsService {
         debts.forEach((debt) => {
           if (debt.commit.getDate() === item.commit.getDate()) {
             debtsDay.debts.push(debt);
+
+            monthDebtsValueTotal += Number(debt.value);
           }
         });
 
@@ -29,8 +32,14 @@ export default class FindStatisticsService {
       });
     }
 
+    var debtsSection = {
+      debtsDays,
+      debtsTotal: monthDebtsValueTotal,
+      debtsCount: debtsDays.length,
+    };
+
     return {
-      debts: debtsDays,
+      debts: debtsSection,
     };
   }
 }
