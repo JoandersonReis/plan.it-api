@@ -57,6 +57,10 @@ export default class LoginUserService {
       });
     }
 
-    return { user: { fullname: user.fullname }, accessToken, refreshToken };
+    return {
+      user: { name: user.fullname, balance: user.balance },
+      accessToken,
+      refreshToken,
+    };
   }
 }

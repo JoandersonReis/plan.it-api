@@ -6,25 +6,27 @@ export default class FindStatisticsService {
   constructor(private readonly debtRepository: DebtRepositoryContract) {}
 
   async execute(month: number, userId: string) {
-    const debts = await this.debtRepository.findByMonth(month, userId);
+    const debts = await this.debtRepository.findByMonth(month - 1, userId);
 
     var debtsDays = [];
     var monthDebtsValueTotal = 0;
 
     if (debts.length > 0) {
       debts.forEach((item) => {
+        var debtsFiltered = debts.filter(
+          (debt) =>
+            debt.commit.getDate() === item.commit.getDate() &&
+            debtsDays.filter(
+              (debtDay) => debtDay.date.getDate() === debt.commit.getDate(),
+            ).length === 0,
+        );
+
         var debtsDay = {
           date: new Date(item.commit),
-          debts: [],
+          debts: debtsFiltered,
         };
 
-        debts.forEach((debt) => {
-          if (debt.commit.getDate() === item.commit.getDate()) {
-            debtsDay.debts.push(debt);
-
-            monthDebtsValueTotal += Number(debt.value);
-          }
-        });
+        monthDebtsValueTotal += Number(item.value);
 
         if (debtsDay.debts.length > 0) {
           debtsDays.push(debtsDay);
