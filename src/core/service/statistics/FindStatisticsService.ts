@@ -10,15 +10,20 @@ export default class FindStatisticsService {
 
     var debtsDays = [];
     var monthDebtsValueTotal = 0;
+    var debtsPaidTotal = 0;
 
     if (debts.length > 0) {
       debts.forEach((item) => {
+        if (
+          debtsDays.findIndex(
+            (debt) => debt.date.getDate() === item.commit.getDate(),
+          ) != -1
+        ) {
+          return;
+        }
+
         var debtsFiltered = debts.filter(
-          (debt) =>
-            debt.commit.getDate() === item.commit.getDate() &&
-            debtsDays.filter(
-              (debtDay) => debtDay.date.getDate() === debt.commit.getDate(),
-            ).length === 0,
+          (debt) => debt.commit.getDate() === item.commit.getDate(),
         );
 
         var debtsDay = {
@@ -27,6 +32,10 @@ export default class FindStatisticsService {
         };
 
         monthDebtsValueTotal += Number(item.value);
+
+        if (item.paid) {
+          debtsPaidTotal += Number(item.value);
+        }
 
         if (debtsDay.debts.length > 0) {
           debtsDays.push(debtsDay);
@@ -38,6 +47,7 @@ export default class FindStatisticsService {
       debtsDays,
       debtsTotal: monthDebtsValueTotal,
       debtsCount: debtsDays.length,
+      debtsPaidTotal,
     };
 
     return {

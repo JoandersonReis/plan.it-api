@@ -76,11 +76,18 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
 
     const debts = await this.prisma.debt.findMany({
       where: {
-        commit: {
-          gte: startOfMonth,
-          lte: endOfMonth,
-        },
         userId,
+        OR: [
+          {
+            commit: {
+              gte: startOfMonth,
+              lte: endOfMonth,
+            },
+          },
+          {
+            repeat: true,
+          },
+        ],
       },
     });
 
@@ -99,13 +106,14 @@ export class DebtRepositoryPrisma implements DebtRepositoryContract {
   }
 
   public async update(
+    userId: string,
     id: string,
     data: Partial<TDebtCreateData>,
   ): Promise<TDebtDatabase> {
     const debtUpdated = await this.prisma.debt.update({
       where: {
         id,
-        userId: data.userId,
+        userId,
       },
       include: {
         user: true,

@@ -17,6 +17,7 @@ export abstract class DebtRepositoryContract {
   ): Promise<TDebtDatabase[]>;
 
   public abstract update(
+    userId: string,
     id: string,
     data: Partial<TDebtCreateData>,
   ): Promise<TDebtDatabase>;

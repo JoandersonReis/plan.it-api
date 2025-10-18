@@ -18,7 +18,7 @@ export class UpdateDebtService {
       throw Exception.execute('Dívida não encontrada!', 404);
     }
 
-    const debtUpdated = await this.repository.update(id, data);
+    const debtUpdated = await this.repository.update(userId, id, data);
 
     return debtUpdated;
   }
